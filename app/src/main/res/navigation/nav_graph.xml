@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="de.jr.simpledo.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="asd"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -18,8 +18,8 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="de.jr.simpledo.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:label="Nice"
+        tools:layout="@layout/new_task">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

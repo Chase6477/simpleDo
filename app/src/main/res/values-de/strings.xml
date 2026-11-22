@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="new_task_title">Titel</string>
+    <string name="new_task_description">Beschreibung</string>
+    <string name="new_task_title_edit">Titel...</string>
+    <string name="new_task_description_edit">Beschreibung...</string>
+    <string name="new_task_deadline">Frist</string>
+    <string name="new_task_deadline_message">Benachrichtigen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_save">Speichern</string>
+</resources>
