@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import de.jr.simpledo.databinding.NewTaskBinding;
+import de.jr.simpledo.databinding.MainFragmentBinding;
 
-public class SecondFragment extends Fragment {
+public class MainFragment extends Fragment {
 
-    private NewTaskBinding binding;
+    private MainFragmentBinding binding;
 
     @Override
     public View onCreateView(
@@ -21,7 +21,7 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = NewTaskBinding.inflate(inflater, container, false);
+        binding = MainFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -29,10 +29,15 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*binding.buttonSecond.setOnClickListener(v ->
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment)
-        );*/
+        binding.mainFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(MainFragment.this)
+                        .navigate(R.id.action_mainFragment_to_newTaskFragment);
+            }
+        });
+
+
     }
 
     @Override

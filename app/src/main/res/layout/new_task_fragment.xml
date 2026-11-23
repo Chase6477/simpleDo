@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurfaceDim"
-    tools:context=".SecondFragment">
+    tools:context=".NewTaskFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -153,7 +153,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <Button
                             android:id="@+id/newTaskDeadlineDate"
@@ -162,7 +164,6 @@
                             android:backgroundTint="?attr/colorSurfaceContainerHigh"
                             android:gravity="start|center_vertical"
                             android:paddingHorizontal="8dp"
-                            android:text="So., 16. Nov. 2024"
                             android:textColor="?attr/colorSecondary"
                             android:textSize="16sp"
                             app:cornerRadius="2dp"
@@ -175,7 +176,6 @@
                             android:backgroundTint="?attr/colorSurfaceContainerHigh"
                             android:gravity="start|center_vertical"
                             android:paddingHorizontal="8dp"
-                            android:text="16:45"
                             android:textColor="?attr/colorSecondary"
                             android:textSize="16sp"
                             app:cornerRadius="2dp"

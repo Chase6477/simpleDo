@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.navigation.fragment.NavHostFragment;
@@ -22,6 +25,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
+
+    private NavHostFragment nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +43,24 @@ public class MainActivity extends AppCompatActivity {
         });
         setSupportActionBar(binding.toolbar);
 
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+        nav = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_content_main);
 
-        if (navHostFragment != null) {
-            NavController navController = navHostFragment.getNavController();
+        if (nav != null) {
+            NavController navController = nav.getNavController();
 
             appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-            navController.navigate(R.id.action_FirstFragment_to_SecondFragment);
+            navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+                @Override
+                public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                    MenuItem settingsItem = binding.toolbar.getMenu().findItem(R.id.action_settings);
+                    if (settingsItem != null)
+                        settingsItem.setVisible(navDestination.getId() != R.id.settingsFragment);
+                }
+            });
+
         }
     }
 
@@ -67,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            nav.getNavController().navigate(R.id.settingsFragment);
             return true;
         }
 

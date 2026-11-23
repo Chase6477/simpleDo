@@ -10,4 +10,5 @@
     <string name="new_task_deadline_message">Benachrichtigen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="action_save">Speichern</string>
+    <string name="new_task_label">Neue Aufgabe</string>
 </resources>
