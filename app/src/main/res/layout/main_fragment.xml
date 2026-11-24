@@ -5,17 +5,22 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurfaceDim"
     tools:context=".MainFragment">
 
     <ListView
         android:id="@+id/main_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fastScrollEnabled="false"
+        android:layout_margin="16dp"
+        android:divider="@null"
+        android:dividerHeight="8dp"
         android:nestedScrollingEnabled="true"
         android:scrollbars="none"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-80dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_fab"
