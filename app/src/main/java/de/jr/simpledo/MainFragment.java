@@ -22,15 +22,16 @@ public class MainFragment extends Fragment {
 
     private MainFragmentBinding binding;
 
-    final ArrayList<TaskItem> itemList = new ArrayList<>();
+    private ArrayList<TaskItem> itemList = new ArrayList<>();
     private MainListAdapter adapter;
+    private TaskData taskData;;
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
+        taskData = new TaskData(requireContext());
         binding = MainFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
@@ -38,6 +39,9 @@ public class MainFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        itemList = taskData.getListCopy();
 
         binding.mainFab.setOnClickListener(v ->
                 NavHostFragment.findNavController(MainFragment.this)
@@ -47,8 +51,6 @@ public class MainFragment extends Fragment {
 
         binding.mainList.setAdapter(adapter);
 
-        itemList.add(new TaskItem("title", "description", true, LocalDate.of(2026, 11, 30), null, false));
-
         binding.mainList.setOnItemClickListener(
                 (parent, v, position, id) ->
                         listItemClick(position));
@@ -56,22 +58,22 @@ public class MainFragment extends Fragment {
                 (parent, v, position, id) ->
                         listItemLongClick(position));
 
-
     }
 
     public void listItemClick(int position) {
-        itemList.get(position).toggleCompleted();
+        TaskItem i = itemList.get(position);
+        i.toggleCompleted();
+        taskData.setEntry(position, i, true);
+        itemList = taskData.getListCopy();
         adapter.notifyDataSetChanged();
     }
 
     public boolean listItemLongClick(int position) {
-        itemList.remove(position);
+        taskData.removeEntry(position, true);
+        adapter.remove(itemList.get(position));
+        itemList = taskData.getListCopy();
         adapter.notifyDataSetChanged();
         return true;
-    }
-
-    public void updateList() {
-
     }
 
     @Override
@@ -79,5 +81,6 @@ public class MainFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 
 }

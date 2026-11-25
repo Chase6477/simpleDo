@@ -4,11 +4,13 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 
 import androidx.activity.OnBackPressedCallback;
@@ -21,6 +23,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.gson.Gson;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -53,7 +56,19 @@ public class NewTaskFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.newTaskSave.setOnClickListener(v -> save());
+        binding.newTaskSave.setOnClickListener(v -> {
+            if (!save(requireContext())) return;
+            NavHostFragment.findNavController(this).navigate(R.id.mainFragment);
+        });
+
+        binding.newTaskTitleEdit.requestFocus();
+
+        binding.newTaskTitleEdit.post(() -> {
+            InputMethodManager imm = (InputMethodManager)
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+            imm.showSoftInput(binding.newTaskTitleEdit, InputMethodManager.SHOW_IMPLICIT );
+        });
 
 
         //Save alert handling
@@ -136,11 +151,11 @@ public class NewTaskFragment extends Fragment {
         );
     }
 
-    private boolean save() {
+    private boolean save(Context context) {
         TaskItem item = createSave();
         if (item == null) return false;
 
-        return true;
+        return (new TaskData(context).addEntry(item, true));
     }
 
     @Override
