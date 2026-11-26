@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
+import android.widget.Toolbar;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class NewTaskFragment extends Fragment {
 
     private LocalDate date = LocalDate.now().plusDays(1);
     private LocalTime time = null;
+    private MaterialToolbar toolbar;
 
     @Override
     public View onCreateView(
@@ -82,13 +84,13 @@ public class NewTaskFragment extends Fragment {
                     }
                 });
 
-        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        toolbar = requireActivity().findViewById(R.id.toolbar);
+
         toolbar.setNavigationOnClickListener(v -> {
             if (needsCancelConfirm())
                 cancel();
             else
                 NavHostFragment.findNavController(this).navigateUp();
-
         });
 
 
