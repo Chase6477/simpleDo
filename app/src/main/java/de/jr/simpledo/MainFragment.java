@@ -22,41 +22,17 @@ public class MainFragment extends Fragment {
 
     private MainFragmentBinding binding;
 
-    private ArrayList<TaskItem> itemList = new ArrayList<>();
+    private ArrayList<TaskItem> itemList;
     private MainListAdapter adapter;
-    private TaskData taskData;;
+    private TaskData taskData;
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        taskData = new TaskData(requireContext());
         binding = MainFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-        itemList = taskData.getListCopy();
-
-        binding.mainFab.setOnClickListener(v ->
-                NavHostFragment.findNavController(MainFragment.this)
-                .navigate(R.id.action_mainFragment_to_newTaskFragment));
-
-        adapter = new MainListAdapter(requireContext(), itemList);
-
-        binding.mainList.setAdapter(adapter);
-
-        binding.mainList.setOnItemClickListener(
-                (parent, v, position, id) ->
-                        listItemClick(position));
-        binding.mainList.setOnItemLongClickListener(
-                (parent, v, position, id) ->
-                        listItemLongClick(position));
 
     }
 
@@ -77,10 +53,24 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onStart() {
+        super.onStart();
+        taskData = new TaskData(requireContext());
+        itemList = taskData.getListCopy();
+
+        binding.mainFab.setOnClickListener(v ->
+                NavHostFragment.findNavController(MainFragment.this)
+                        .navigate(R.id.action_mainFragment_to_newTaskFragment));
+
+        adapter = new MainListAdapter(requireContext(), itemList);
+
+        binding.mainList.setAdapter(adapter);
+
+        binding.mainList.setOnItemClickListener(
+                (parent, v, position, id) ->
+                        listItemClick(position));
+        binding.mainList.setOnItemLongClickListener(
+                (parent, v, position, id) ->
+                        listItemLongClick(position));
     }
-
-
 }

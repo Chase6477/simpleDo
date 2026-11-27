@@ -217,4 +217,5 @@ public class NewTaskFragment extends Fragment {
             timePicker.show(getParentFragmentManager(), null);
         });
     }
+
 }

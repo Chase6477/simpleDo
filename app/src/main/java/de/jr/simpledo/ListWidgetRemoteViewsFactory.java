@@ -1,5 +1,7 @@
 package de.jr.simpledo;
 
+import static de.jr.simpledo.ListWidget.EXTRA_ITEM;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +47,16 @@ public class ListWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
     @Override
     public RemoteViews getViewAt(int i) {
 
+
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.list_widget_item);
+
+
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtra(EXTRA_ITEM, i);
+
+        remoteViews.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
+
+
         remoteViews.setTextViewText(R.id.widget_list_title, list.get(i).getTitle());
         remoteViews.setTextViewText(R.id.widget_list_deadline,
                 TaskItem.getRelativeTimeSpan(list.get(i).getDateTime()));
@@ -53,6 +64,16 @@ public class ListWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             remoteViews.setColorStateList(R.id.widget_list_deadline, "setTextColor", android.R.color.system_primary_fixed_dim);
             remoteViews.setColorStateList(R.id.widget_list_title, "setTextColor", android.R.color.system_primary_fixed_dim);
+            remoteViews.setInt(
+                    R.id.widget_list_title,
+                    "setPaintFlags",
+                    Paint.ANTI_ALIAS_FLAG
+            );
+            remoteViews.setInt(
+                    R.id.widget_list_deadline,
+                    "setPaintFlags",
+                    Paint.ANTI_ALIAS_FLAG
+            );
         }
         if (list.get(i).isCompleted()) {
             remoteViews.setInt(
@@ -78,7 +99,7 @@ public class ListWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -93,7 +114,7 @@ public class ListWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
     @Override
     public void onDataSetChanged() {
-
+        list = new TaskData(context).getListCopy();
     }
 
     @Override

@@ -1,13 +1,35 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.SimpleDo.AppWidget.Container"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/textColorPrimaryInverseDisableOnly"
+    android:orientation="vertical"
+    android:padding="8dp"
     android:theme="@style/Theme.SimpleDo.AppWidgetContainer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:text="+"
+            app:cornerRadius="100dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/widget_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
     </ListView>
 
@@ -15,4 +37,4 @@
         android:id="@+id/widget_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
